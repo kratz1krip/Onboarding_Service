@@ -1,0 +1,28 @@
+@startuml
+entity Employee { *Id : int
+  FullName : string
+  DepartmentId : int
+  MentorId : int? }
+entity Mentor { *Id : int
+  EmployeeId : int }
+entity ChecklistTemplate { *Id : int
+  DepartmentId : int
+  Title : string }
+entity ChecklistTask { *Id : int
+  EmployeeId : int
+  TemplateId : int
+  Title : string
+  IsDone : bool }
+entity Quiz { *Id : int
+  Title : string
+  PassScore : int }
+entity QuizAttempt { *Id : int
+  EmployeeId : int
+  QuizId : int
+  Score : int }
+Mentor ||--o{ Employee
+Employee ||--o{ ChecklistTask
+ChecklistTemplate ||--o{ ChecklistTask
+Employee ||--o{ QuizAttempt
+Quiz ||--o{ QuizAttempt
+@enduml
