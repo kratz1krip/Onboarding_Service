@@ -1,0 +1,37 @@
+openapi: 3.0.3
+info:
+  title: Onboarding.Checklists API
+  version: 1.0.0
+paths:
+  /employees/{id}/checklist:
+    get:
+      summary: Чек-лист новичка
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: integer } }
+      responses:
+        '200': { description: Список задач чек-листа }
+        '403': { description: Чек-лист другого сотрудника }
+  /checklist-tasks/{taskId}:
+    patch:
+      summary: Отметка выполнения задачи
+      parameters:
+        - { name: taskId, in: path, required: true, schema: { type: integer } }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object, properties: { isDone: { type: boolean } } }
+      responses:
+        '204': { description: Отметка сохранена }
+  /mentors/assign:
+    post:
+      summary: Назначение наставника
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [employeeId, mentorId]
+              properties: { employeeId: { type: integer }, mentorId: { type: integer } }
+      responses:
+        '200': { description: Наставник назначен }
+        '409': { description: У наставника уже три новичка }
